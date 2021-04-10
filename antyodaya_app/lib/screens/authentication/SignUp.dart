@@ -6,8 +6,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:telemedicine_app/screens/services/database.dart';
-import 'package:telemedicine_app/screens/shared/loading.dart';
+import 'package:antyodaya_app/screens/services/database.dart';
+import 'package:antyodaya_app/screens/shared/loading.dart';
 
 class SignUp extends StatefulWidget {
   @override

@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:telemedicine_app/screens/shared/loading.dart';
+import 'package:antyodaya_app/screens/shared/loading.dart';
 import 'SignUp.dart';
 
 class Login extends StatefulWidget {
