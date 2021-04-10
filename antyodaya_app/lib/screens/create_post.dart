@@ -1,4 +1,7 @@
+//import 'dart:html';
 import 'dart:io';
+import 'services/database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -8,6 +11,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:image/image.dart' as Im;
 import 'package:uuid/uuid.dart';
+import 'authentication/Login.dart';
+
+final CollectionReference postsRef =
+    FirebaseFirestore.instance.collection('posts');
 
 class Upload extends StatefulWidget {
   final User currentUser;
@@ -17,6 +24,12 @@ class Upload extends StatefulWidget {
 }
 
 class _UploadState extends State<Upload> {
+  FirebaseAuth _auth = FirebaseAuth.instance;
+
+  User user;
+  TextEditingController locationController = TextEditingController();
+  TextEditingController captionController = TextEditingController();
+  var storageRef = FirebaseStorage.instance.ref();
   File _image;
   final picker = ImagePicker();
   bool isUploading = false;
@@ -91,11 +104,55 @@ class _UploadState extends State<Upload> {
     });
   }
 
+  Future<String> uploadImage(imageFile) async {
+    String url;
+    UploadTask uploadTask =
+        storageRef.child("post_$postId.jpg").putFile(imageFile);
+    await uploadTask.whenComplete(() async {
+      url = await uploadTask.snapshot.ref.getDownloadURL();
+    });
+
+    return url;
+  }
+
+  // createPostInFirestore(
+  //     {String postId,
+  //     String ownerId,
+  //     String mediaUrl,
+  //     String location,
+  //     String description}) {
+  //   postsRef
+  //       .doc(widget.currentUser.uid)
+  //       .collection("userPosts")
+  //       .doc(postId)
+  //       .set({
+  //     "postId": postId,
+  //     "ownerId": widget.currentUser.uid,
+  //     "mediaUrl": mediaUrl,
+  //     "description": description,
+  //     "location": location,
+  //   });
+  // }
+
   handleSubmit() async {
     setState(() {
       isUploading = true;
     });
     await compressImage();
+    String mediaUrl = await uploadImage(_image);
+    // await DataBaseService(uid: widget.currentUser.uid)
+    //     .updatePostData(mediaUrl, "", "", "");
+
+    User firebaseUser = _auth.currentUser;
+
+    if (firebaseUser != null) {
+      setState(() {
+        this.user = firebaseUser;
+      });
+    }
+
+    DataBaseService(uid: user.uid)
+        .updatePostData(_image.toString(), "", "", "");
   }
 
   Scaffold buildUploadForm() {
@@ -179,6 +236,7 @@ class _UploadState extends State<Upload> {
                   hintText: "Where was this photo taken?",
                   border: InputBorder.none,
                 ),
+                controller: captionController,
               ),
             ),
           ),

@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:antyodaya_app/screens/create_post.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:antyodaya_app/screens/shared/loading.dart';
@@ -13,6 +15,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   bool loading = false;
   String _email, _password;
 
@@ -21,7 +24,7 @@ class _LoginState extends State<Login> {
       setState(() => loading = false);
       if (user != null) {
         print(user);
-
+        Upload(currentUser: user);
         Navigator.pushReplacementNamed(context, "/");
       }
     });
