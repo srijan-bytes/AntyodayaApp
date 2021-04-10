@@ -1,6 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:antyodaya_app/screens/shared/loading.dart';
+import 'package:telemedicine_app/screens/shared/loading.dart';
 import 'SignUp.dart';
 
 class Login extends StatefulWidget {
@@ -52,7 +54,14 @@ class _LoginState extends State<Login> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('ERROR'),
+            title: Text(
+              'ERROR',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                color: Colors.red,
+              ),
+            ),
             content: Text(errormessage),
             actions: <Widget>[
               // ignore: deprecated_member_use
@@ -92,6 +101,7 @@ class _LoginState extends State<Login> {
                       child: Column(
                         children: <Widget>[
                           Container(
+                            color: Colors.blue,
                             child: TextFormField(
                                 // ignore: missing_return
                                 validator: (input) {
@@ -102,7 +112,9 @@ class _LoginState extends State<Login> {
                                     prefixIcon: Icon(Icons.email)),
                                 onSaved: (input) => _email = input.trim()),
                           ),
+                          SizedBox(height: 20),
                           Container(
+                            color: Colors.amberAccent,
                             child: TextFormField(
                                 // ignore: missing_return
                                 validator: (input) {
@@ -136,7 +148,13 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   GestureDetector(
-                    child: Text('Create an Account?'),
+                    child: Text(
+                      'Create an Account?',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
                     onTap: navigateToSignUp,
                   )
                 ],
