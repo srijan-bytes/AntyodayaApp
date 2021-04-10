@@ -190,7 +190,6 @@ class _EditProfileState extends State<EditProfile> {
                         setState(() {
                           profImagePath = image.path.toString(); //Image Picker
                         });
-                        ;
                       },
                     ),
                   ),
