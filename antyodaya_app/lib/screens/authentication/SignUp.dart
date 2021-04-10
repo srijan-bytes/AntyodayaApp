@@ -1,5 +1,6 @@
 // ignore: avoid_web_libraries_in_flutter
 
+import 'package:antyodaya_app/screens/authentication/otp.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:antyodaya_app/screens/services/database.dart';
@@ -16,6 +17,7 @@ class _SignUpState extends State<SignUp> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String _name, _email, _password, _no, _address, _location;
+  TextEditingController _controller = TextEditingController();
 
   checkAuthentication() async {
     _auth.authStateChanges().listen((user) async {
@@ -175,7 +177,11 @@ class _SignUpState extends State<SignUp> {
                                     if (input.isEmpty)
                                       return 'Enter Phone Number';
                                   },
+                                  maxLength: 10,
+                                  controller: _controller,
+                                  keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
+                                      prefix: Text("+91 "),
                                       labelText: 'Phone Number',
                                       prefixIcon: Icon(Icons.phone)),
                                   onSaved: (input) => _no = input.trim()),
@@ -185,8 +191,13 @@ class _SignUpState extends State<SignUp> {
                             // ignore: deprecated_member_use
                             RaisedButton(
                               padding: EdgeInsets.fromLTRB(70, 10, 70, 10),
-                              onPressed: signUp,
-                              child: Text('SignUp',
+                              onPressed: () {
+                                SignUp();
+                                // Navigator.of(context).push(MaterialPageRoute(
+                                //     builder: (context) =>
+                                //         Otp(_controller.text)));
+                              },
+                              child: Text('Sign Up',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 20.0,
