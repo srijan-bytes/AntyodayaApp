@@ -36,7 +36,7 @@ dependencies:
   cloud_firestore: ^0.14.0
   firebase_storage: ^5.2.0
   flutter_spinkit: "^4.1.2"
-  pinput: ^0.2.6
+  #pinput: ^0.2.6
 dev_dependencies:
   flutter_test:
     sdk: flutter
