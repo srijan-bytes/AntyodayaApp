@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class DataBaseService {
   final String uid;
@@ -26,7 +27,7 @@ class DataBaseService {
       FirebaseFirestore.instance.collection('Posts');
   Future updatePostData(String imagelink, String description, String location,
       String phoneno) async {
-    return await users.doc(uid).set({
+    return await posts.doc(uid).set({
       'link': imagelink,
       'decription': description,
       'location': location,
