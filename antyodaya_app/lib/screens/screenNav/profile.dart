@@ -56,10 +56,10 @@ class _ProfilePageState extends State<ProfilePage> {
     getUserId();
     getUserInfo();
     super.initState();
-    var ref =
-        FirebaseStorage.instance.ref().child('Users/' + uId + '/profile.png');
-    ref.getDownloadURL().then((loc) =>
-        setState(() => _imageUrl = loc)); //setting path for profile image
+    var ref = null;
+    // FirebaseStorage.instance.ref().child('Users/' + uId + '/profile.png');
+    // ref.getDownloadURL().then((loc) =>
+    //     setState(() => _imageUrl = loc)); //setting path for profile image
   }
 
   @override

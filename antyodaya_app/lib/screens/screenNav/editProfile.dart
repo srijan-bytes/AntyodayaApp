@@ -77,9 +77,9 @@ class _EditProfileState extends State<EditProfile> {
     _usernameController = TextEditingController(text: name);
     _addController = TextEditingController(text: address);
 
-    var ref =
-        FirebaseStorage.instance.ref().child('Users/' + uId + '/profile.png');
-    ref.getDownloadURL().then((loc) => setState(() => _imageUrl = loc));
+    var ref = null;
+    // FirebaseStorage.instance.ref().child('Users/' + uId + '/profile.png');
+    // ref.getDownloadURL().then((loc) => setState(() => _imageUrl = loc));
   }
 
   @override
