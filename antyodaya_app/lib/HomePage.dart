@@ -1,3 +1,4 @@
+import 'package:antyodaya_app/screens/create_post.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:antyodaya_app/screens/screenNav/profile.dart';
@@ -130,6 +131,15 @@ class _HomePageState extends State<HomePage> {
                   // )
                 ],
               ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Upload()));
+        },
+        label: const Text('Donate'),
+        icon: const Icon(Icons.thumb_up),
+        backgroundColor: Colors.blue,
       ),
 
       //sideNav...
