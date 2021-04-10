@@ -192,7 +192,7 @@ class _SignUpState extends State<SignUp> {
                             RaisedButton(
                               padding: EdgeInsets.fromLTRB(70, 10, 70, 10),
                               onPressed: () {
-                                SignUp();
+                                signUp();
                                 // Navigator.of(context).push(MaterialPageRoute(
                                 //     builder: (context) =>
                                 //         Otp(_controller.text)));
