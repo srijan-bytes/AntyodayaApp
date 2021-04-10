@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:antyodaya_app/screens/screenNav/editProfile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,8 +20,8 @@ class _ProfilePageState extends State<ProfilePage> {
       name = "Error!",
       phone = 'Error!',
       email = "Error!",
-      address = "Error!",
-      location = "Error!";
+      address = "Error!";
+
   //defined default values for the fields...
   String _imageUrl;
 
@@ -45,7 +46,6 @@ class _ProfilePageState extends State<ProfilePage> {
         email = snapshot["email"];
         phone = snapshot["phoneno"];
         address = snapshot["address"];
-        location = snapshot['location'];
       });
     });
   }
@@ -56,10 +56,10 @@ class _ProfilePageState extends State<ProfilePage> {
     getUserId();
     getUserInfo();
     super.initState();
-    // var ref =
-    //     FirebaseStorage.instance.ref().child('users/' + uId + '/profile.png');
-    // ref.getDownloadURL().then((loc) =>
-    //     setState(() => _imageUrl = loc)); //setting path for profile image
+    var ref =
+        FirebaseStorage.instance.ref().child('Users/' + uId + '/profile.png');
+    ref.getDownloadURL().then((loc) =>
+        setState(() => _imageUrl = loc)); //setting path for profile image
   }
 
   @override
@@ -107,13 +107,13 @@ class _ProfilePageState extends State<ProfilePage> {
                         color: Colors.black.withOpacity(0.1),
                         offset: Offset(0, 10))
                   ],
-                  //     shape: BoxShape.circle,
-                  //     image: DecorationImage(
-                  //         // image: _imageUrl == null
-                  //         //     ? NetworkImage(
-                  //         //         'https://firebasestorage.googleapis.com/v0/b/karvaan-app-15704.appspot.com/o/users%2Fdownload%20(1).png?alt=media&token=4337d9ee-45dd-4993-a794-ca4a70d7b911')
-                  //         //     : NetworkImage(_imageUrl),
-                  //         // fit: BoxFit.fill),
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                      image: _imageUrl == null
+                          ? NetworkImage(
+                              'https://firebasestorage.googleapis.com/v0/b/karvaan-app-15704.appspot.com/o/users%2Fdownload%20(1).png?alt=media&token=4337d9ee-45dd-4993-a794-ca4a70d7b911')
+                          : NetworkImage(_imageUrl),
+                      fit: BoxFit.fill),
                 ),
               ),
             ])),
@@ -230,7 +230,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             return Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomePage()));
+                                    builder: (context) => EditProfile(uId)));
                           },
                           child: Icon(
                             Icons.edit,
