@@ -65,19 +65,55 @@ class _HomePageState extends State<HomePage> {
                 children: <Widget>[
                   SizedBox(height: 40.0),
                   Container(
-                    height: 300,
-                    // child: Image(
-                    //   image: AssetImage("images/welcome.jpg"),
-                    //   fit: BoxFit.contain,
-                    // ),
-                  ),
-                  Container(
                     child: Text(
                       "Hello ${user.displayName} you are Logged in as ${user.email}",
                       style: TextStyle(
                           fontSize: 20.0, fontWeight: FontWeight.bold),
                     ),
                   ),
+                  Card(
+                    clipBehavior: Clip.antiAlias,
+                    child: Column(
+                      children: [
+                        ListTile(
+                          leading: Icon(Icons.arrow_drop_down_circle),
+                          title: const Text('Card title 1'),
+                          subtitle: Text(
+                            'Secondary Text',
+                            style:
+                                TextStyle(color: Colors.black.withOpacity(0.6)),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(
+                            'Greyhound divisively hello coldly wonderfully marginally far upon excluding.',
+                            style:
+                                TextStyle(color: Colors.black.withOpacity(0.6)),
+                          ),
+                        ),
+                        ButtonBar(
+                          alignment: MainAxisAlignment.start,
+                          children: [
+                            FlatButton(
+                              onPressed: () {
+                                // Perform some action
+                              },
+                              child: const Text('ACTION 1'),
+                            ),
+                            FlatButton(
+                              onPressed: () {
+                                // Perform some action
+                              },
+                              child: const Text('ACTION 2'),
+                            ),
+                          ],
+                        ),
+                        //Image.asset('assets/card-sample-image.jpg'),
+                      ],
+                    ),
+                  )
+
                   // ignore: deprecated_member_use
                   // RaisedButton(
                   //   padding: EdgeInsets.fromLTRB(70, 10, 70, 10),
