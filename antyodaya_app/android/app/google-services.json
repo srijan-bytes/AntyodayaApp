@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "120526607788",
+    "project_id": "antyodayafinal",
+    "storage_bucket": "antyodayafinal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120526607788:android:580a3927420d08679ed609",
+        "android_client_info": {
+          "package_name": "com.application.antyodaya_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "120526607788-p23vph84fqh9sd60cs3vu4qh651k618a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpyy-Gj9MapZ3hD6hJ7fKIBioFbj0q-Zs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "120526607788-p23vph84fqh9sd60cs3vu4qh651k618a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
