@@ -1,4 +1,5 @@
 import 'package:antyodaya_app/screens/create_post.dart';
+import 'package:antyodaya_app/screens/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:antyodaya_app/screens/screenNav/profile.dart';
@@ -38,11 +39,24 @@ class _HomePageState extends State<HomePage> {
     _auth.signOut();
   }
 
+  List postsList = [];
   @override
   void initState() {
     super.initState();
     this.checkAuthentification();
     this.getUser();
+    fetchDatabaseList();
+  }
+
+  fetchDatabaseList() async {
+    dynamic resultant = await DataBaseService().getPostsList();
+    if (resultant == null) {
+      print('unable to retreive');
+    } else {
+      setState(() {
+        postsList = resultant;
+      });
+    }
   }
 
   @override
@@ -72,49 +86,53 @@ class _HomePageState extends State<HomePage> {
                           fontSize: 20.0, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Card(
-                    clipBehavior: Clip.antiAlias,
-                    child: Column(
-                      children: [
-                        ListTile(
-                          leading: Icon(Icons.arrow_drop_down_circle),
-                          title: const Text('Card title 1'),
-                          subtitle: Text(
-                            'Secondary Text',
-                            style:
-                                TextStyle(color: Colors.black.withOpacity(0.6)),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Text(
-                            'Greyhound divisively hello coldly wonderfully marginally far upon excluding.',
-                            style:
-                                TextStyle(color: Colors.black.withOpacity(0.6)),
-                          ),
-                        ),
-                        ButtonBar(
-                          alignment: MainAxisAlignment.start,
-                          children: [
-                            FlatButton(
-                              onPressed: () {
-                                // Perform some action
-                              },
-                              child: const Text('ACTION 1'),
-                            ),
-                            FlatButton(
-                              onPressed: () {
-                                // Perform some action
-                              },
-                              child: const Text('ACTION 2'),
-                            ),
-                          ],
-                        ),
-                        //Image.asset('assets/card-sample-image.jpg'),
-                      ],
-                    ),
-                  )
-
+                  Expanded(
+                      child: ListView.builder(
+                          itemCount: postsList.length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              clipBehavior: Clip.antiAlias,
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    leading: Icon(Icons.arrow_drop_down_circle),
+                                    title: const Text('Card title 1'),
+                                    subtitle: Text(
+                                      postsList[index]()['link'],
+                                      style: TextStyle(
+                                          color: Colors.black.withOpacity(0.6)),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Text(
+                                      postsList[index]()['location'],
+                                      style: TextStyle(
+                                          color: Colors.black.withOpacity(0.6)),
+                                    ),
+                                  ),
+                                  ButtonBar(
+                                    alignment: MainAxisAlignment.start,
+                                    children: [
+                                      FlatButton(
+                                        onPressed: () {
+                                          // Perform some action
+                                        },
+                                        child: const Text('ACTION 1'),
+                                      ),
+                                      FlatButton(
+                                        onPressed: () {
+                                          // Perform some action
+                                        },
+                                        child: const Text('ACTION 2'),
+                                      ),
+                                    ],
+                                  ),
+                                  //Image.asset('assets/card-sample-image.jpg'),
+                                ],
+                              ),
+                            );
+                          }))
                   // ignore: deprecated_member_use
                   // RaisedButton(
                   //   padding: EdgeInsets.fromLTRB(70, 10, 70, 10),

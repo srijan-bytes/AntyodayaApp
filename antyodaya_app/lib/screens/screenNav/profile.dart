@@ -110,8 +110,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   shape: BoxShape.circle,
                   image: DecorationImage(
                       image: _imageUrl == null
-                          ? NetworkImage(
-                              'C:\Users\SIMRAN KAUR\Desktop\fh36\AntyodayaApp\antyodaya_app\assets\profile.png')
+                          ? NetworkImage('image/icon.png')
                           : NetworkImage(_imageUrl),
                       fit: BoxFit.fill),
                 ),

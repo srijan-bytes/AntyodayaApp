@@ -1,3 +1,5 @@
+//import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -29,11 +31,26 @@ class DataBaseService {
       String phoneno) async {
     return await posts.doc(uid).set({
       'link': imagelink,
-      'decription': description,
+      'description': description,
       'location': location,
       'phoneno': phoneno,
     }, SetOptions(merge: true)).then((_) {
       print("Success");
     });
+  }
+
+  Future getPostsList() async {
+    List itemsList = [];
+    try {
+      await posts.get().then((querySnapshot) {
+        querySnapshot.docs.forEach((element) {
+          itemsList.add(element.data);
+        });
+      });
+      return itemsList;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 }
