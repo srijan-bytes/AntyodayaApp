@@ -77,9 +77,9 @@ class _EditProfileState extends State<EditProfile> {
     _usernameController = TextEditingController(text: name);
     _addController = TextEditingController(text: address);
 
-    var ref = null;
-    // FirebaseStorage.instance.ref().child('Users/' + uId + '/profile.png');
-    // ref.getDownloadURL().then((loc) => setState(() => _imageUrl = loc));
+    var ref =
+        FirebaseStorage.instance.ref().child('Users/' + uId + '/profile.png');
+    ref.getDownloadURL().then((loc) => setState(() => _imageUrl = loc));
   }
 
   @override
@@ -184,11 +184,18 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                       ),
                       onTap: () async {
-                        File image = await ImagePicker.pickImage(
-                            source: ImageSource.gallery);
-                        print(image.path);
+                        File image;
+                        final picker = ImagePicker();
+                        final pickedFile =
+                            await picker.getImage(source: ImageSource.gallery);
+
                         setState(() {
-                          profImagePath = image.path.toString(); //Image Picker
+                          if (pickedFile != null) {
+                            image = File(pickedFile.path);
+                            profImagePath = image.path.toString();
+                          } else {
+                            print('No image selected.');
+                          }
                         });
                       },
                     ),

@@ -55,7 +55,7 @@ class _UploadState extends State<Upload> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          SvgPicture.asset('assests/images/upload.svg', height: 260.0),
+          SvgPicture.asset('images/upload.svg', height: 260.0),
           Padding(
             padding: EdgeInsets.only(top: 20.0),
             child: RaisedButton(
