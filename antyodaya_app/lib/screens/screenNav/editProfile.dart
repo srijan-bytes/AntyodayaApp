@@ -183,14 +183,14 @@ class _EditProfileState extends State<EditProfile> {
                           color: Colors.black,
                         ),
                       ),
-                      onTap: () async {
-                        File image = await ImagePicker.pickImage(
-                            source: ImageSource.gallery);
-                        print(image.path);
-                        setState(() {
-                          profImagePath = image.path.toString(); //Image Picker
-                        });
-                      },
+                      // onTap: () async {
+                      //   File image = await ImagePicker.pickImage(
+                      //       source: ImageSource.gallery);
+                      //   print(image.path);
+                      //   setState(() {
+                      //     profImagePath = image.path.toString(); //Image Picker
+                      //   });
+                      // },
                     ),
                   ),
                 ],
