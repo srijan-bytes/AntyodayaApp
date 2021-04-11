@@ -271,6 +271,8 @@ class _HomePageState extends State<HomePage> {
               //     return Navigator.push(
               //         context,
               //         MaterialPageRoute(
+              //             builder: (context) => PaymentsPage(new ChatItem(
+              //                 "Name", "Yantriki", "ab", "8888888888", "abb"))));
               //     // app settings
               //     // ...
               //   },
