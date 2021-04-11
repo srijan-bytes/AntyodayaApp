@@ -158,7 +158,7 @@ class _EditProfileState extends State<EditProfile> {
                         //     'https://googleflutter.com/sample_image.jpg'),
                         image: _imageUrl == null
                             ? NetworkImage(
-                                'https://googleflutter.com/sample_image.jpg')
+                                'package:antyodaya_app/assets/profile.png')
                             : NetworkImage(_imageUrl),
                       ),
                     ),
