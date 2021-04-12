@@ -14,7 +14,9 @@ import 'package:uuid/uuid.dart';
 import 'authentication/Login.dart';
 
 final CollectionReference postsRef =
-    FirebaseFirestore.instance.collection('posts');
+    FirebaseFirestore.instance.collection('Posts');
+final CollectionReference usersRef =
+    FirebaseFirestore.instance.collection('Users');
 
 class Upload extends StatefulWidget {
   @override
@@ -22,6 +24,7 @@ class Upload extends StatefulWidget {
 }
 
 class _UploadState extends State<Upload> {
+  String name, email, phone, address;
   FirebaseAuth _auth = FirebaseAuth.instance;
   User user;
   getUser() {
@@ -32,10 +35,28 @@ class _UploadState extends State<Upload> {
     }
   }
 
+  Future getUserInfo() async {
+    //Extracting user info from firestore...
+    //to get user information
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user.uid)
+        .snapshots()
+        .listen((snapshot) {
+      setState(() {
+        name = snapshot["name"];
+        email = snapshot["email"];
+        phone = snapshot["phoneno"];
+        address = snapshot["address"];
+      });
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     getUser();
+    getUserInfo();
     super.initState();
   }
 
@@ -166,7 +187,9 @@ class _UploadState extends State<Upload> {
       });
     }
 
-    DataBaseService(uid: user.uid).updatePostData(mediaUrl, "", "", "");
+    await DataBaseService(uid: user.uid)
+        .updatePostData(mediaUrl, "", "", phone, name);
+    Navigator.pop(context);
   }
 
   Scaffold buildUploadForm() {

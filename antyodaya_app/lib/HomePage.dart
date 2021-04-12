@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User user;
   String uid = "";
-
+  String name, email, phone, address;
   bool isloggedin = false;
 
   checkAuthentification() async {
@@ -89,6 +89,7 @@ class _HomePageState extends State<HomePage> {
         title: Text("HOME PAGE"),
       ),
       body: Container(
+        color: Colors.grey,
         child: !isloggedin
             ? CircularProgressIndicator()
             : Column(
@@ -113,44 +114,44 @@ class _HomePageState extends State<HomePage> {
                                 children: [
                                   ListTile(
                                     leading: Icon(Icons.arrow_drop_down_circle),
-                                    title: const Text('Card title 1'),
+                                    title: Text(
+                                        "NAME: " + postsList[index]()['name']),
                                     subtitle: Text(
-                                      postsList[index]()['link'],
+                                      "Descriptin",
                                       style: TextStyle(
                                           color: Colors.black.withOpacity(0.6)),
                                     ),
                                   ),
-                                  getImage(postsList[index]()['link']),
-
                                   Container(
-                                    width: 160,
-                                    height: 160,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 4,
-                                          color: Theme.of(context)
-                                              .scaffoldBackgroundColor),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            spreadRadius: 2,
-                                            blurRadius: 10,
-                                            color:
-                                                Colors.black.withOpacity(0.1),
-                                            offset: Offset(0, 10))
-                                      ],
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                          image:
-                                              NetworkImage('images/icons.png'),
-                                          // image: CachedNetworkImageProvider(
-                                          //     postsList[index]()['link']),
-                                          fit: BoxFit.fill),
-                                    ),
+                                    height: 400.0,
+                                    width: 400.0,
+                                    child: getImage(postsList[index]()['link']),
                                   ),
+                                  // Container(
+                                  //   width: 160,
+                                  //   height: 160,
+                                  //   decoration: BoxDecoration(
+                                  //     border: Border.all(
+                                  //         width: 4,
+                                  //         color: Theme.of(context)
+                                  //             .scaffoldBackgroundColor),
+                                  //     // boxShadow: [
+                                  //     //   BoxShadow(
+                                  //     //       spreadRadius: 2,
+                                  //     //       blurRadius: 10,
+                                  //     //       color:
+                                  //     //           Colors.black.withOpacity(0.1),
+                                  //     //       offset: Offset(0, 10))
+                                  //     // ],
+
+                                  //     shape: BoxShape.circle,
+                                  //   ),
+
                                   Padding(
                                     padding: const EdgeInsets.all(16.0),
                                     child: Text(
-                                      postsList[index]()['location'],
+                                      "Location: " +
+                                          postsList[index]()['location'],
                                       style: TextStyle(
                                           color: Colors.black.withOpacity(0.6)),
                                     ),
@@ -162,13 +163,13 @@ class _HomePageState extends State<HomePage> {
                                         onPressed: () {
                                           // Perform some action
                                         },
-                                        child: const Text('ACTION 1'),
+                                        child: const Text('Phone No.'),
                                       ),
                                       FlatButton(
                                         onPressed: () {
                                           // Perform some action
                                         },
-                                        child: const Text('ACTION 2'),
+                                        child: const Text('Location'),
                                       ),
                                     ],
                                   ),
@@ -203,12 +204,12 @@ class _HomePageState extends State<HomePage> {
         icon: const Icon(Icons.thumb_up),
         backgroundColor: Colors.blue,
       ),
-
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       //sideNav...
 
       drawer: Drawer(
         child: Container(
-          color: Color(0xFF000000),
+          color: Colors.blue,
           child: ListView(
             // Important: Remove any padding from the ListView.
             padding: EdgeInsets.zero,
@@ -239,27 +240,23 @@ class _HomePageState extends State<HomePage> {
                       bottomLeft: Radius.circular(17),
                       bottomRight: Radius.circular(17),
                     ),
-                    color: Color(0xFFFFC495),
+                    color: Colors.white,
                   ),
                 ),
               ),
               SizedBox(
                 height: 10,
               ),
-              Divider(
-                thickness: 1,
-                color: Color(0xFF282833),
-              ),
+              Divider(thickness: 1, color: Colors.white),
               ListTile(
                 leading: Icon(
                   Icons.person,
-                  color: Color(0xFFFFC495),
+                  color: Colors.white,
                 ),
                 title: Text(
                   'Profile',
                   style: TextStyle(
-                      fontFamily: 'Montserrat SemiBold',
-                      color: Color(0xFFFFC495)),
+                      fontFamily: 'Montserrat SemiBold', color: Colors.white),
                 ),
                 onTap: () {
                   return Navigator.push(context,
@@ -268,18 +265,17 @@ class _HomePageState extends State<HomePage> {
               ),
               Divider(
                 thickness: 1,
-                color: Color(0xFF282833),
+                color: Colors.white,
               ),
               ListTile(
                 leading: Icon(
                   Icons.person,
-                  color: Color(0xFFFFC495),
+                  color: Colors.white,
                 ),
                 title: Text(
                   'About',
                   style: TextStyle(
-                      fontFamily: 'Montserrat SemiBold',
-                      color: Color(0xFFFFC495)),
+                      fontFamily: 'Montserrat SemiBold', color: Colors.white),
                 ),
                 onTap: () {
                   bool isLender = true;
@@ -294,10 +290,7 @@ class _HomePageState extends State<HomePage> {
                   // ...
                 },
               ),
-              Divider(
-                thickness: 1,
-                color: Color(0xFF282833),
-              ),
+              Divider(thickness: 1, color: Colors.white),
 
               // // /* &&&&&&   Added a test list tile for enterPrice page &&&&&&&&&&&&&&&&&*/
               // ListTile(
