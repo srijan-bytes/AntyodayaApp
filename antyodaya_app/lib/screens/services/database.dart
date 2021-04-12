@@ -28,12 +28,13 @@ class DataBaseService {
   final CollectionReference posts =
       FirebaseFirestore.instance.collection('Posts');
   Future updatePostData(String imagelink, String description, String location,
-      String phoneno) async {
+      String phoneno, String name) async {
     return await posts.doc(uid).set({
       'link': imagelink,
       'description': description,
       'location': location,
       'phoneno': phoneno,
+      'name': name,
     }, SetOptions(merge: true)).then((_) {
       print("Success");
     });
