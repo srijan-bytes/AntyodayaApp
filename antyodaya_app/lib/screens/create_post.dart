@@ -17,16 +17,28 @@ final CollectionReference postsRef =
     FirebaseFirestore.instance.collection('posts');
 
 class Upload extends StatefulWidget {
-  final User currentUser;
-  Upload({this.currentUser});
   @override
   _UploadState createState() => _UploadState();
 }
 
 class _UploadState extends State<Upload> {
   FirebaseAuth _auth = FirebaseAuth.instance;
-
   User user;
+  getUser() {
+    //getting user id from database, cloud firestore
+    FirebaseAuth auth = FirebaseAuth.instance;
+    if (auth.currentUser != null) {
+      user = auth.currentUser;
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getUser();
+    super.initState();
+  }
+
   TextEditingController locationController = TextEditingController();
   TextEditingController captionController = TextEditingController();
   var storageRef = FirebaseStorage.instance.ref();
@@ -106,8 +118,11 @@ class _UploadState extends State<Upload> {
 
   Future<String> uploadImage(imageFile) async {
     String url;
-    UploadTask uploadTask =
-        storageRef.child("post_$postId.jpg").putFile(imageFile);
+    UploadTask uploadTask = storageRef
+        .child("Posts")
+        .child(user.uid)
+        .child("post_$postId.jpg")
+        .putFile(imageFile);
     await uploadTask.whenComplete(() async {
       url = await uploadTask.snapshot.ref.getDownloadURL();
     });
@@ -151,8 +166,7 @@ class _UploadState extends State<Upload> {
       });
     }
 
-    DataBaseService(uid: user.uid)
-        .updatePostData(_image.toString(), "", "", "");
+    DataBaseService(uid: user.uid).updatePostData(mediaUrl, "", "", "");
   }
 
   Scaffold buildUploadForm() {
