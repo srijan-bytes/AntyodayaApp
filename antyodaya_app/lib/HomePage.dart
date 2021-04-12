@@ -3,6 +3,8 @@ import 'package:antyodaya_app/screens/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:antyodaya_app/screens/screenNav/profile.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,6 +14,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User user;
+  String uid = "";
+
   bool isloggedin = false;
 
   checkAuthentification() async {
@@ -20,6 +24,17 @@ class _HomePageState extends State<HomePage> {
         Navigator.of(context).pushReplacementNamed("start");
       }
     });
+  }
+
+  getImage(String imageUrl) {
+    try {
+      return CachedNetworkImage(
+          imageUrl: imageUrl,
+          placeholder: (context, url) => CircularProgressIndicator(),
+          errorWidget: (context, url, error) => Icon(Icons.error));
+    } catch (e) {
+      return null;
+    }
   }
 
   getUser() async {
@@ -90,6 +105,8 @@ class _HomePageState extends State<HomePage> {
                       child: ListView.builder(
                           itemCount: postsList.length,
                           itemBuilder: (context, index) {
+                            String _imageUrl = postsList[index]()['link'];
+
                             return Card(
                               clipBehavior: Clip.antiAlias,
                               child: Column(
@@ -101,6 +118,33 @@ class _HomePageState extends State<HomePage> {
                                       postsList[index]()['link'],
                                       style: TextStyle(
                                           color: Colors.black.withOpacity(0.6)),
+                                    ),
+                                  ),
+                                  getImage(postsList[index]()['link']),
+
+                                  Container(
+                                    width: 160,
+                                    height: 160,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 4,
+                                          color: Theme.of(context)
+                                              .scaffoldBackgroundColor),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            spreadRadius: 2,
+                                            blurRadius: 10,
+                                            color:
+                                                Colors.black.withOpacity(0.1),
+                                            offset: Offset(0, 10))
+                                      ],
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                          image:
+                                              NetworkImage('images/icons.png'),
+                                          // image: CachedNetworkImageProvider(
+                                          //     postsList[index]()['link']),
+                                          fit: BoxFit.fill),
                                     ),
                                   ),
                                   Padding(

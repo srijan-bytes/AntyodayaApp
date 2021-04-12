@@ -24,7 +24,7 @@ class _LoginState extends State<Login> {
       setState(() => loading = false);
       if (user != null) {
         print(user);
-        Upload(currentUser: user);
+
         Navigator.pushReplacementNamed(context, "/");
       }
     });
