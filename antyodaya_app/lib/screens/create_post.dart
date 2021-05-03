@@ -12,6 +12,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:image/image.dart' as Im;
 import 'package:uuid/uuid.dart';
 import 'authentication/Login.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 
 final CollectionReference postsRef =
     FirebaseFirestore.instance.collection('Posts');
@@ -27,6 +29,8 @@ class _UploadState extends State<Upload> {
   String name, email, phone, address;
   FirebaseAuth _auth = FirebaseAuth.instance;
   User user;
+  Position _currentPosition;
+  String _currentAddress;
   getUser() {
     //getting user id from database, cloud firestore
     FirebaseAuth auth = FirebaseAuth.instance;
@@ -169,6 +173,36 @@ class _UploadState extends State<Upload> {
   //     "location": location,
   //   });
   // }
+  //
+  _getCurrentLocation() {
+    Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.best,
+            forceAndroidLocationManager: true)
+        .then((Position position) {
+      setState(() {
+        _currentPosition = position;
+        _getAddressFromLatLng();
+      });
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
+  _getAddressFromLatLng() async {
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+          _currentPosition.latitude, _currentPosition.longitude);
+
+      Placemark place = placemarks[0];
+
+      setState(() {
+        _currentAddress =
+            "${place.locality}, ${place.postalCode}, ${place.country}";
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
 
   handleSubmit() async {
     setState(() {
@@ -290,7 +324,9 @@ class _UploadState extends State<Upload> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0)),
               color: Colors.blue,
-              onPressed: () => print("get user location"),
+              onPressed: () {
+                _getCurrentLocation();
+              },
               icon: Icon(
                 Icons.my_location,
                 color: Colors.white,
