@@ -1,19 +1,19 @@
 //import 'dart:html';
 import 'dart:io';
-import 'services/database.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:image/image.dart' as Im;
-import 'package:uuid/uuid.dart';
-import 'authentication/Login.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:image/image.dart' as Im;
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:uuid/uuid.dart';
+
+import 'services/database.dart';
 
 final CollectionReference postsRef =
     FirebaseFirestore.instance.collection('Posts');
@@ -31,6 +31,9 @@ class _UploadState extends State<Upload> {
   User user;
   Position _currentPosition;
   String _currentAddress;
+  String description;
+  double latitude, longitude;
+
   getUser() {
     //getting user id from database, cloud firestore
     FirebaseAuth auth = FirebaseAuth.instance;
@@ -174,18 +177,18 @@ class _UploadState extends State<Upload> {
   //   });
   // }
   //
-  _getCurrentLocation() {
-    Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.best,
-            forceAndroidLocationManager: true)
-        .then((Position position) {
-      setState(() {
-        _currentPosition = position;
-        _getAddressFromLatLng();
-      });
-    }).catchError((e) {
+  _getCurrentLocation() async {
+    try {
+      _currentPosition = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.medium);
+      if (_currentPosition != null) {
+        longitude = _currentPosition.longitude;
+        latitude = _currentPosition.latitude;
+      }
+      print('$latitude $longitude');
+    } catch (e) {
       print(e);
-    });
+    }
   }
 
   _getAddressFromLatLng() async {
@@ -221,8 +224,8 @@ class _UploadState extends State<Upload> {
       });
     }
 
-    await DataBaseService(uid: user.uid)
-        .updatePostData(mediaUrl, "", "", phone, name);
+    await DataBaseService(uid: user.uid).updatePostData(
+        mediaUrl, description, latitude, longitude, phone, name);
     Navigator.pop(context);
   }
 
@@ -286,6 +289,9 @@ class _UploadState extends State<Upload> {
             title: Container(
               width: 250,
               child: TextField(
+                onChanged: (value) {
+                  description = value;
+                },
                 decoration: InputDecoration(
                   hintText: "Write Description ....",
                   border: InputBorder.none,
