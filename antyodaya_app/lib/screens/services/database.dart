@@ -1,7 +1,6 @@
 //import 'dart:html';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 class DataBaseService {
   final String uid;
@@ -27,12 +26,13 @@ class DataBaseService {
   //Posts
   final CollectionReference posts =
       FirebaseFirestore.instance.collection('Posts');
-  Future updatePostData(String imagelink, String description, String location,
-      String phoneno, String name) async {
+  Future updatePostData(String imagelink, String description, double latitude,
+      double longitude, String phoneno, String name) async {
     return await posts.doc(uid).set({
       'link': imagelink,
       'description': description,
-      'location': location,
+      'latitude': latitude,
+      'longitude': longitude,
       'phoneno': phoneno,
       'name': name,
     }, SetOptions(merge: true)).then((_) {

@@ -1,10 +1,9 @@
 import 'package:antyodaya_app/screens/create_post.dart';
+import 'package:antyodaya_app/screens/screenNav/profile.dart';
 import 'package:antyodaya_app/screens/services/database.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:antyodaya_app/screens/screenNav/profile.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -117,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                                     title: Text(
                                         "NAME: " + postsList[index]()['name']),
                                     subtitle: Text(
-                                      "Descriptin",
+                                      postsList[index]()['description'],
                                       style: TextStyle(
                                           color: Colors.black.withOpacity(0.6)),
                                     ),
@@ -150,8 +149,7 @@ class _HomePageState extends State<HomePage> {
                                   Padding(
                                     padding: const EdgeInsets.all(16.0),
                                     child: Text(
-                                      "Location: " +
-                                          postsList[index]()['location'],
+                                      "Location: ",
                                       style: TextStyle(
                                           color: Colors.black.withOpacity(0.6)),
                                     ),
@@ -159,17 +157,13 @@ class _HomePageState extends State<HomePage> {
                                   ButtonBar(
                                     alignment: MainAxisAlignment.start,
                                     children: [
+                                      Text('Phone Number: ' +
+                                          postsList[index]()['phoneno']),
                                       FlatButton(
                                         onPressed: () {
                                           // Perform some action
                                         },
-                                        child: const Text('Phone No.'),
-                                      ),
-                                      FlatButton(
-                                        onPressed: () {
-                                          // Perform some action
-                                        },
-                                        child: const Text('Location'),
+                                        child: const Text('LOCATE'),
                                       ),
                                     ],
                                   ),

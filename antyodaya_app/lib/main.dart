@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'HomePage.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 
+import 'HomePage.dart';
 import 'screens/authentication/Login.dart';
 import 'screens/authentication/SignUp.dart';
 import 'screens/wrapper.dart';
@@ -16,7 +16,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primaryColor: Colors.blue),
+      theme: ThemeData.dark().copyWith(
+          primaryColor: Colors.teal,
+          backgroundColor: Colors.black,
+          accentColor: Colors.white,
+          buttonColor: Colors.teal),
       debugShowCheckedModeBanner: false,
       home: HomePage(),
       routes: <String, WidgetBuilder>{
