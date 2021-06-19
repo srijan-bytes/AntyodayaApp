@@ -17,10 +17,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark().copyWith(
-          primaryColor: Colors.teal,
-          backgroundColor: Colors.black,
-          accentColor: Colors.white,
-          buttonColor: Colors.teal),
+          primaryColor: Colors.teal[700],
+          scaffoldBackgroundColor: Color(0xFF28282B)),
       debugShowCheckedModeBanner: false,
       home: HomePage(),
       routes: <String, WidgetBuilder>{
