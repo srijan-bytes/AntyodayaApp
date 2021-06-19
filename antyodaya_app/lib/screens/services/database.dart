@@ -39,19 +39,4 @@ class DataBaseService {
       print("Success");
     });
   }
-
-  Future getPostsList() async {
-    List itemsList = [];
-    try {
-      await posts.get().then((querySnapshot) {
-        querySnapshot.docs.forEach((element) {
-          itemsList.add(element.data);
-        });
-      });
-      return itemsList;
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
 }

@@ -45,7 +45,9 @@ dependencies:
   cached_network_image: ^3.0.0
   geolocator: ^7.0.3
   geocoding: ^2.0.0
-  
+  animated_text_kit: ^4.2.1
+  google_maps_flutter: ^2.0.6
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -63,13 +65,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - images/food4.jpg
-    - images/logo.png
-    - images/food3.jpg
-    - images/icon.png
-    - images/food5.webp
-    - images/food2.jpg
-    - images/upload.svg
+    - dark_bg.jpg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
