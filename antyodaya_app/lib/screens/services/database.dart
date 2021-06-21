@@ -28,7 +28,8 @@ class DataBaseService {
       FirebaseFirestore.instance.collection('Posts');
   Future updatePostData(String imagelink, String description, double latitude,
       double longitude, String phoneno, String name) async {
-    return await posts.doc(uid).set({
+    return await posts.doc().set({
+      'uid': uid,
       'link': imagelink,
       'description': description,
       'latitude': latitude,

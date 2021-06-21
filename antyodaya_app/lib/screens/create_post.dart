@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image/image.dart' as Im;
@@ -105,23 +104,36 @@ class _UploadState extends State<Upload> {
   Container buildSplashScreen() {
     return Container(
       color: Colors.blueAccent,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Stack(
         children: <Widget>[
-          SvgPicture.asset('images/upload.svg', height: 260.0),
-          Padding(
-            padding: EdgeInsets.only(top: 20.0),
-            child: RaisedButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0)),
-              child: Text(
-                "Upload Image",
-                style: TextStyle(color: Colors.white, fontSize: 22.0),
-              ),
-              color: Colors.deepPurple,
-              onPressed: () => selectImage(context),
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/dark_bg.jpg'), fit: BoxFit.cover),
             ),
-          )
+          ),
+          Center(
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 400.0,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 20.0),
+                  child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0)),
+                    child: Text(
+                      "Upload Image",
+                      style: TextStyle(color: Colors.white, fontSize: 22.0),
+                    ),
+                    color: Colors.deepPurple,
+                    onPressed: () => selectImage(context),
+                  ),
+                )
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -158,25 +170,6 @@ class _UploadState extends State<Upload> {
     return url;
   }
 
-  // createPostInFirestore(
-  //     {String postId,
-  //     String ownerId,
-  //     String mediaUrl,
-  //     String location,
-  //     String description}) {
-  //   postsRef
-  //       .doc(widget.currentUser.uid)
-  //       .collection("userPosts")
-  //       .doc(postId)
-  //       .set({
-  //     "postId": postId,
-  //     "ownerId": widget.currentUser.uid,
-  //     "mediaUrl": mediaUrl,
-  //     "description": description,
-  //     "location": location,
-  //   });
-  // }
-  //
   _getCurrentLocation() async {
     try {
       _currentPosition = await Geolocator.getCurrentPosition(

@@ -15,7 +15,14 @@ class Post_Card extends StatelessWidget {
   }
 
   String imageurl, name, description, phoneno;
-  Post_Card({this.imageurl, this.description, this.name, this.phoneno});
+  double lat, long;
+  Post_Card(
+      {this.imageurl,
+      this.description,
+      this.name,
+      this.phoneno,
+      this.lat,
+      this.long});
   @override
   Widget build(BuildContext context) {
     return Padding(
