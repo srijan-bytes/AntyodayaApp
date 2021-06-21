@@ -156,6 +156,8 @@ class PostStream extends StatelessWidget {
               description: data['description'],
               imageurl: data['link'],
               phoneno: data['phoneno'],
+              lat: data['latitude'],
+              long: data['longitude'],
             );
             postsWidgets.add(postWidget);
           }
